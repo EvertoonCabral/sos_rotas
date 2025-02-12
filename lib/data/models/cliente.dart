@@ -3,6 +3,7 @@ import 'package:sos_rotas/domain/entities/cliente_entity.dart';
 class ClienteModel extends ClienteEntity {
   
   ClienteModel(
+    super.cnh,
       {  
       required super.id,
       required super.nome,
