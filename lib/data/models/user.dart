@@ -4,6 +4,7 @@ class UserModel extends UserEntity {
 
   
   UserModel(
+    super.cnh,
       {required super.id,
       required super.nome,
       required super.email,

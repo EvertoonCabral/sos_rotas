@@ -3,13 +3,16 @@ import 'package:sos_rotas/domain/entities/enums/status_pagador_enum.dart';
 import 'package:sos_rotas/domain/entities/user_entity.dart';
 
 class ClienteEntity extends UserEntity {
+
   String cpf;
   String cnpj;
   List<String> telefones;
   StatusPagadorEnum statusCliente;
   String observacoesCadastro;
 
-  ClienteEntity({
+  ClienteEntity(
+    super.cnh,
+    {
     
     required super.id,
     required super.nome,

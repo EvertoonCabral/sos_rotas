@@ -1,3 +1,4 @@
+import 'package:sos_rotas/domain/entities/cnh_entity.dart';
 import 'package:sos_rotas/domain/entities/endereco_entity.dart';
 import 'package:sos_rotas/domain/entities/enums/tipo_usuario_enum.dart';
 
@@ -11,9 +12,13 @@ final String senha;
 final EnderecoEntity endereco;
 final bool ativo;
 final TipoUsuarioEnum tipoUsuario;
+final CnhEntity cnh;
 
 
-  UserEntity({
+  UserEntity(
+    this.cnh, 
+  {
+
     required this.id,
     required this.nome,
     required this.email,
@@ -22,6 +27,7 @@ final TipoUsuarioEnum tipoUsuario;
     required this.endereco,
     required this.ativo,
     required this.tipoUsuario,
+    
   });
 
 

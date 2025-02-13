@@ -1,14 +1,30 @@
+buildscript {
+    repositories {
+        google()        
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.2' // ✅ Atualize para a versão mais recente
+        classpath 'com.google.gms:google-services:4.4.0' // ✅ Certifique-se de que essa linha está correta
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21" // ✅ Atualize para a versão mais recente
+    } // 🔹 Feche corretamente a chave do `dependencies`
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 
 rootProject.buildDir = "../build"
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
