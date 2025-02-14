@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sos_rotas/presentation/view/authentication_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,10 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Firebase App',
-      home: Scaffold(
-        appBar: AppBar(title: Text('Firebase Configurado!')),
-        body: Center(child: Text('Firebase está rodando!')),
-      ),
+      home: AuthenticationScreen()
     );
   }
 }

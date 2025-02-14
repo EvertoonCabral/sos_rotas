@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sos_rotas/_core/my_colors.dart';
+import 'package:sos_rotas/domain/usecases/autenticar_usuario.dart';
 
 class AuthenticationScreen extends StatefulWidget {
 
   @override
   State<AuthenticationScreen> createState() => _AuthScreenState();
 }
+
+AutenticarUsuario _autenticarUsuario = new AutenticarUsuario();
 
 class _AuthScreenState extends State<AuthenticationScreen> {
   final TextEditingController _emailController = TextEditingController();
@@ -172,11 +175,16 @@ class _AuthScreenState extends State<AuthenticationScreen> {
   }
 
   _entrarUsuario({required String email, required String senha}) {
-    print("Entrar usuário $email, $senha");
+
+_autenticarUsuario.entrarUsuario(email: email, senha: senha);
+
+
   }
 
   _criarUsuario(
       {required String email, required String senha, required String nome}) {
-    print("Criar usuário $email, $senha, $nome");
+
+_autenticarUsuario.cadastrarUsuario(email: email, senha: senha, nome: nome);
+
   }
 }
