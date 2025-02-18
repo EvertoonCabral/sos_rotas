@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sos_rotas/_core/my_colors.dart';
 import 'package:sos_rotas/domain/usecases/autenticar_usuario.dart';
+import 'package:sos_rotas/presentation/helpers/showSnackBar.dart';
 
 class AuthenticationScreen extends StatefulWidget {
 
@@ -182,9 +183,26 @@ _autenticarUsuario.entrarUsuario(email: email, senha: senha);
   }
 
   _criarUsuario(
-      {required String email, required String senha, required String nome}) {
+      {required String email, required String senha, required String nome}) async {
 
-_autenticarUsuario.cadastrarUsuario(email: email, senha: senha, nome: nome);
+  String? erro =
+  
+   await _autenticarUsuario.cadastrarUsuario(
+    email: email,
+    senha: senha,
+    nome: nome  
+    );
+
+if(erro == null){
+
+showSnackBar(context: context, mensagen: "Cadastro realizado com sucesso!", isErro: false);
+
+}else{
+
+showSnackBar(context: context, mensagen: erro);
+
+}
+
 
   }
 }
