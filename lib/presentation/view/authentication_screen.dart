@@ -4,12 +4,11 @@ import 'package:sos_rotas/domain/usecases/autenticar_usuario.dart';
 import 'package:sos_rotas/presentation/helpers/showSnackBar.dart';
 
 class AuthenticationScreen extends StatefulWidget {
-
   @override
   State<AuthenticationScreen> createState() => _AuthScreenState();
 }
 
-AutenticarUsuario _autenticarUsuario = new AutenticarUsuario();
+AutenticarUsuario _autenticarUsuario =  AutenticarUsuario();
 
 class _AuthScreenState extends State<AuthenticationScreen> {
   final TextEditingController _emailController = TextEditingController();
@@ -176,33 +175,42 @@ class _AuthScreenState extends State<AuthenticationScreen> {
   }
 
   _entrarUsuario({required String email, required String senha}) {
+    _autenticarUsuario.entrarUsuario(email: email, senha: senha,).then((String? erro){
 
-_autenticarUsuario.entrarUsuario(email: email, senha: senha);
+   if (erro == null) {
+     
+     print("Login efetuado com sucesso");
 
+      } else {
 
+        print(erro);
+
+      }
+
+    });
+ 
+ 
   }
 
+
   _criarUsuario(
-      {required String email, required String senha, required String nome}) async {
-
-  String? erro =
-  
-   await _autenticarUsuario.cadastrarUsuario(
-    email: email,
-    senha: senha,
-    nome: nome  
-    );
-
-if(erro == null){
-
-showSnackBar(context: context, mensagen: "Cadastro realizado com sucesso!", isErro: false);
-
-}else{
-
-showSnackBar(context: context, mensagen: erro);
-
-}
-
-
+      {required String email, required String senha, required String nome}) {
+    _autenticarUsuario
+        .cadastrarUsuario(
+      email: email,
+      senha: senha,
+      nome: nome,
+    )
+    //usando THEN aqui ao inves de async por boas praticas
+        .then((String? erro) {
+      if (erro == null) {
+        showSnackBar(
+            context: context,
+            mensagen: "Cadastro realizado com sucesso!",
+            isErro: false);
+      } else {
+        showSnackBar(context: context, mensagen: erro);
+      }
+    });
   }
 }
