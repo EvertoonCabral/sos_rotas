@@ -46,4 +46,18 @@ class AutenticarUsuario {
 
     return null;
   }
+
+  Future<String?> redefinicaoSenha({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        return "Email não cadastrado ou invalido.";
+      }
+
+      return e.code;
+    }
+
+    return null;
+  }
 }

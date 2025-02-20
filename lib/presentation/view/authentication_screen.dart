@@ -8,7 +8,7 @@ class AuthenticationScreen extends StatefulWidget {
   State<AuthenticationScreen> createState() => _AuthScreenState();
 }
 
-AutenticarUsuario _autenticarUsuario =  AutenticarUsuario();
+AutenticarUsuario _autenticarUsuario = AutenticarUsuario();
 
 class _AuthScreenState extends State<AuthenticationScreen> {
   final TextEditingController _emailController = TextEditingController();
@@ -89,6 +89,14 @@ class _AuthScreenState extends State<AuthenticationScreen> {
                         }
                         return null;
                       },
+                    ),
+                    Visibility(
+                      visible: isEntrando,
+                      child: TextButton(
+                          onPressed: () {
+                            esqueciMinhaSenhaClicado();
+                          },
+                          child: Text("Esqueci minha senha.")),
                     ),
                     Visibility(
                         visible: !isEntrando,
@@ -175,23 +183,24 @@ class _AuthScreenState extends State<AuthenticationScreen> {
   }
 
   _entrarUsuario({required String email, required String senha}) {
-    _autenticarUsuario.entrarUsuario(email: email, senha: senha,).then((String? erro){
+    _autenticarUsuario
+        .entrarUsuario(
+      email: email,
+      senha: senha,
+    )
+        .then((String? erro) {
 
-   if (erro == null) {
-     
-     print("Login efetuado com sucesso");
 
-      } else {
+            if (erro!= null) {
+              showSnackBar(context: context, mensagen: erro, isErro: true);
+            }else{
 
-        print(erro);
+                
 
-      }
+            }
 
     });
- 
- 
   }
-
 
   _criarUsuario(
       {required String email, required String senha, required String nome}) {
@@ -201,7 +210,7 @@ class _AuthScreenState extends State<AuthenticationScreen> {
       senha: senha,
       nome: nome,
     )
-    //usando THEN aqui ao inves de async por boas praticas
+        //usando THEN aqui ao inves de async por boas praticas
         .then((String? erro) {
       if (erro == null) {
         showSnackBar(
@@ -212,5 +221,46 @@ class _AuthScreenState extends State<AuthenticationScreen> {
         showSnackBar(context: context, mensagen: erro);
       }
     });
+  }
+
+  esqueciMinhaSenhaClicado() {
+    String email = _emailController.text;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        TextEditingController redefinicaoSenhaController =
+            TextEditingController(text: email);
+        return AlertDialog(
+          title: Text("Confirme o e-mail para redefinição de senha"),
+          content: TextField(
+            controller: redefinicaoSenhaController,
+            decoration: InputDecoration(label: Text("Confirme o e-mail")),
+          ),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32))),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  _autenticarUsuario
+                      .redefinicaoSenha(email: redefinicaoSenhaController.text)
+                      .then((String? erro) {
+                    if (erro == null) {
+                      showSnackBar(
+                          context: context,
+                          mensagen: "Email de redefinição de senha enviado!",
+                          isErro: false);
+                    } else {
+                      showSnackBar(context: context, mensagen: erro);
+                    }
+
+                    Navigator.pop(context);
+                  });
+                },
+                child: Text("Redefinir Senha."))
+          ],
+        );
+      },
+    );
   }
 }
